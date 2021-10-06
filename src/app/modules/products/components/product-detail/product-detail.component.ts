@@ -16,7 +16,7 @@ export class ProductDetailComponent implements OnInit {
     @Input()
     detailTitle: string;
 
-    constructor(private productState: ProductStateService, private userState: UserStateService) {}
+    constructor(private productState: ProductStateService, public userState: UserStateService) {}
 
     ngOnInit(): void {}
 

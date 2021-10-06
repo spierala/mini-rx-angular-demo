@@ -12,7 +12,7 @@
     <div class="flex-grow-1">
         <mat-sidenav-container class="example-container h-100">
             <mat-sidenav mode="side"
-                         [opened]="selectedTodo$ | async"
+                         [opened]="!!(selectedTodo$ | async)"
                          [position]="'end'"
                          [mode]="'side'">
                 <app-todo-detail *ngIf="selectedTodo$ | async as selectedTodo"

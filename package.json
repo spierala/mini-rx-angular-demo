@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:prod:sourcemap": "ng build --source-map",
+    "build:prod:stats": "npm run build:prod:sourcemap && source-map-explorer dist/mini-rx-angular-demo/**/*.js"
   },
   "private": true,
   "dependencies": {

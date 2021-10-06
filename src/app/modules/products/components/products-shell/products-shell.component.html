@@ -24,7 +24,7 @@
         <mat-sidenav-container class="example-container h-100">
             <mat-sidenav
                 mode="side"
-                [opened]="productState.selectedProduct$ | async"
+                [opened]="!!(productState.selectedProduct$ | async)"
                 [position]="'end'"
                 [mode]="'side'"
             >
