@@ -1,4 +1,4 @@
-# MiniRx Store Angular Demo
+# MiniRx Store Demo (Angular)
 
 MiniRx is a RxJS Redux Store.
 
