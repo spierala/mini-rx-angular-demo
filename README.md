@@ -1,27 +1,18 @@
-# MiniRxAngularDemo
+# MiniRx Store Angular Demo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+MiniRx is a RxJS Redux Store.
 
-## Development server
+### Quick Links
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+-   🤓 Learn more about MiniRx on the [Docs site](https://mini-rx.io)
+-   ⭐ [MiniRx on GitHub](https://github.com/spierala/mini-rx-store)
+-   🚀 See MiniRx in action in the [Angular demo](https://angular-demo.mini-rx.io)
 
-## Code scaffolding
+MiniRx provides simple yet powerful state management with **[Feature Stores](https://spierala.github.io/mini-rx-store/docs/fs-quick-start)**.
+To manage state at large scale you can use the classic **[Redux API](https://spierala.github.io/mini-rx-store/docs/redux)**.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The Demo uses both the Redux API and the Feature Stores:
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+-   Todos: Feature Store
+-   Products and Cart: Redux
+-   User: Feature Store
