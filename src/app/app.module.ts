@@ -36,6 +36,6 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent],
-    providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}]
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
 export class AppModule {}

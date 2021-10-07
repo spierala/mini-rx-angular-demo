@@ -7,6 +7,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     host: { class: 'h-75 d-flex justify-content-around align-items-center' },
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CounterShellComponent {
-
-}
+export class CounterShellComponent {}

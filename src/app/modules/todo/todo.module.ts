@@ -8,12 +8,7 @@ import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [TodoShellComponent, TodoDetailComponent, FilterComponent, TodoListComponent],
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    MatSidenavModule,
-  ]
+    declarations: [TodoShellComponent, TodoDetailComponent, FilterComponent, TodoListComponent],
+    imports: [FormsModule, ReactiveFormsModule, CommonModule, MatSidenavModule],
 })
-export class TodoModule { }
+export class TodoModule {}

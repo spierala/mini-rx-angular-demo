@@ -1,7 +1,12 @@
 <div class="w-100 h-100 d-flex flex-column">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand">
-            <img src="assets/mini-rx-logo.svg" width="48" alt="Mini Rx Store Logo" class="d-inline-block align-top mr-2">
+            <img
+                src="assets/mini-rx-logo.svg"
+                width="48"
+                alt="Mini Rx Store Logo"
+                class="d-inline-block align-top mr-2"
+            />
             MiniRx Store Demo
         </a>
         <ul class="d-flex flex-grow-1 navbar-nav mr-auto mt-2 mt-lg-0">
@@ -12,9 +17,7 @@
                 <a class="nav-link" [routerLink]="'/products'">Products</a>
             </li>
             <li class="nav-item mr-auto" [routerLinkActive]="'active'">
-                <a class="nav-link" [routerLink]="'/counter'">
-                    Counter
-                </a>
+                <a class="nav-link" [routerLink]="'/counter'">Counter</a>
             </li>
             <li class="nav-item" [routerLinkActive]="'active'">
                 <a class="nav-link d-flex align-items-center" [routerLink]="'/user'">
@@ -32,7 +35,19 @@
                 </a>
             </li>
         </ul>
-      <a href="https://angular-demo.mini-rx.io" title="Go to the Angular MiniRx demo on Github" target="_blank"><img src="assets/github-logo.svg" height="32" width="32" alt="Mini Rx Store Logo" class=" ml-3"></a>
+        <a
+            href="https://angular-demo.mini-rx.io"
+            title="Go to the Angular MiniRx demo on Github"
+            target="_blank"
+        >
+            <img
+                src="assets/github-logo.svg"
+                height="32"
+                width="32"
+                alt="Mini Rx Store Logo"
+                class="ml-3"
+            />
+        </a>
     </nav>
     <div class="flex-grow-1">
         <router-outlet></router-outlet>
