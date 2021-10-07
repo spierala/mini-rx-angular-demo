@@ -12,6 +12,7 @@ import { StoreDevtoolsModule, StoreModule } from 'mini-rx-store-ng';
 import { ImmutableStateExtension, UndoExtension } from 'mini-rx-store';
 import { ProductStateModule } from './modules/products/state/product-state.module';
 import { UserModule } from './modules/user/user.module';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
     imports: [
@@ -35,5 +36,6 @@ import { UserModule } from './modules/user/user.module';
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent],
+    providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}]
 })
 export class AppModule {}
