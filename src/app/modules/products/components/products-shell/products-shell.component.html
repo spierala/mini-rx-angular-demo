@@ -18,38 +18,25 @@
         </div>
     </nav>
 
-    <div class="flex-grow-1">
-        <mat-sidenav-container class="example-container h-100">
-            <mat-sidenav
-                mode="side"
-                [opened]="!!(productState.selectedProduct$ | async)"
-                [position]="'end'"
-                [mode]="'side'"
-            >
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <app-product-list
+                    [products]="productState.products$ | async"
+                    [selectedProduct]="productState.selectedProduct$ | async"
+                    [displayCode]="productState.displayCode$ | async"
+                    [showCartBtn]="!permissions.canUpdateProducts"
+                    (productSelect)="productState.productSelected($event)"
+                    (displayCodeChange)="productState.toggleProductCode($event)"
+                    (addToCart)="productState.addProductToCart($event)"
+                ></app-product-list>
+            </div>
+            <div class="col" *ngIf="productState.selectedProduct$ | async as selectedProduct">
                 <app-product-detail
-                    *ngIf="productState.selectedProduct$ | async as selectedProduct"
                     [product]="selectedProduct"
                     [detailTitle]="detailTitle$ | async"
                 ></app-product-detail>
-            </mat-sidenav>
-
-            <mat-sidenav-content>
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <app-product-list
-                                [products]="productState.products$ | async"
-                                [selectedProduct]="productState.selectedProduct$ | async"
-                                [displayCode]="productState.displayCode$ | async"
-                                [showCartBtn]="!permissions.canUpdateProducts"
-                                (productSelect)="productState.productSelected($event)"
-                                (displayCodeChange)="productState.toggleProductCode($event)"
-                                (addToCart)="productState.addProductToCart($event)"
-                            ></app-product-list>
-                        </div>
-                    </div>
-                </div>
-            </mat-sidenav-content>
-        </mat-sidenav-container>
+            </div>
+        </div>
     </div>
 </div>

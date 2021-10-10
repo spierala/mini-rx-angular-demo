@@ -10,50 +10,35 @@
         </div>
     </nav>
 
-    <div class="flex-grow-1">
-        <mat-sidenav-container class="example-container h-100">
-            <mat-sidenav
-                mode="side"
-                [opened]="!!(selectedTodo$ | async)"
-                [position]="'end'"
-                [mode]="'side'"
-            >
-                <app-todo-detail
-                    *ngIf="selectedTodo$ | async as selectedTodo"
-                    [todo]="selectedTodo"
-                ></app-todo-detail>
-            </mat-sidenav>
-
-            <mat-sidenav-content>
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-header">
-                                    <span>Todos</span>
-                                </div>
-                                <app-todo-list
-                                    [todos]="todosNotDone$ | async"
-                                    [selectedTodo]="selectedTodo$ | async"
-                                    (selectTodo)="selectTodo($event)"
-                                ></app-todo-list>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-header">
-                                    <span>Todos Done</span>
-                                </div>
-                                <app-todo-list
-                                    [todos]="todosDone$ | async"
-                                    [selectedTodo]="selectedTodo$ | async"
-                                    (selectTodo)="selectTodo($event)"
-                                ></app-todo-list>
-                            </div>
-                        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span>Todos</span>
                     </div>
+                    <app-todo-list
+                        [todos]="todosNotDone$ | async"
+                        [selectedTodo]="selectedTodo$ | async"
+                        (selectTodo)="selectTodo($event)"
+                    ></app-todo-list>
                 </div>
-            </mat-sidenav-content>
-        </mat-sidenav-container>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span>Todos Done</span>
+                    </div>
+                    <app-todo-list
+                        [todos]="todosDone$ | async"
+                        [selectedTodo]="selectedTodo$ | async"
+                        (selectTodo)="selectTodo($event)"
+                    ></app-todo-list>
+                </div>
+            </div>
+            <div class="col" *ngIf="selectedTodo$ | async as selectedTodo">
+                <app-todo-detail [todo]="selectedTodo"></app-todo-detail>
+            </div>
+        </div>
     </div>
 </div>
