@@ -9,9 +9,9 @@ import { Action, createFeatureSelector, createSelector, FeatureStore } from 'min
 // STATE INTERFACE
 interface TodoState {
     todos: Todo[];
-    selectedTodoId: number;
+    selectedTodoId: number | undefined;
     filter: Filter;
-    newTodo: Todo; // Used when creating a new Todo
+    newTodo: Todo | undefined; // Used when creating a new Todo
 }
 
 // INITIAL STATE
@@ -69,7 +69,7 @@ export class TodosStateService extends FeatureStore<TodoState> {
     todosDone$: Observable<Todo[]> = this.select(getTodosDone);
     todosNotDone$: Observable<Todo[]> = this.select(getTodosNotDone);
     filter$: Observable<Filter> = this.select(getFilter);
-    selectedTodo$: Observable<Todo> = this.select(getSelectedTodo);
+    selectedTodo$: Observable<Todo | undefined> = this.select(getSelectedTodo);
 
     constructor(private apiService: TodosApiService) {
         super('todos', initialState);

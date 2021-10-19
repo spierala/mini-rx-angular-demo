@@ -2,7 +2,7 @@ import { Product } from '../models/product';
 import { action, payload } from 'ts-action';
 
 export const toggleProductCode = action('[Product] Toggle Product Code', payload<boolean>());
-export const setCurrentProduct = action('[Product] Set Current Product', payload<Product>());
+export const setCurrentProduct = action('[Product] Set Current Product', payload<number>());
 export const clearCurrentProduct = action('[Product] Clear Current Product');
 export const initializeCurrentProduct = action('[Product] Initialize Current Product');
 

@@ -11,7 +11,7 @@ import { TodosStateService } from '../../state/todos-state.service';
 })
 export class TodoDetailComponent implements OnInit {
     @Input()
-    todo: Todo;
+    todo!: Todo;
 
     constructor(private todosService: TodosStateService) {}
 

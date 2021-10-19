@@ -23,7 +23,7 @@ import { CartItem } from '../models/cart-item';
 // State for this feature (Product)
 export interface ProductState {
     showProductCode: boolean;
-    currentProductId: number | null;
+    currentProductId: number | undefined;
     products: Product[];
     error: string;
     search: string;
@@ -32,7 +32,7 @@ export interface ProductState {
 
 const initialState: ProductState = {
     showProductCode: true,
-    currentProductId: null,
+    currentProductId: undefined,
     products: [],
     error: '',
     search: '',
@@ -47,8 +47,8 @@ const initialState: ProductState = {
 export const productReducer = reducer<ProductState>(
     initialState,
     on(toggleProductCode, (state, { payload }) => ({ ...state, showProductCode: payload })),
-    on(setCurrentProduct, (state, { payload }) => ({ ...state, currentProductId: payload.id })),
-    on(clearCurrentProduct, (state) => ({ ...state, currentProductId: null })),
+    on(setCurrentProduct, (state, { payload }) => ({ ...state, currentProductId: payload })),
+    on(clearCurrentProduct, (state) => ({ ...state, currentProductId: undefined })),
     on(initializeCurrentProduct, (state) => ({ ...state, currentProductId: 0 })),
     on(loadSuccess, (state, { payload }) => ({
         ...state,
@@ -97,7 +97,7 @@ export const productReducer = reducer<ProductState>(
     on(deleteProductSuccess, (state, { payload }) => ({
         ...state,
         products: state.products.filter((product) => product.id !== payload),
-        currentProductId: null,
+        currentProductId: undefined,
         error: '',
     })),
     on(deleteProductFail, (state, { payload }) => ({

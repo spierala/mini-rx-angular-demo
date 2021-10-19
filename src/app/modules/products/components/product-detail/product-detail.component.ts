@@ -11,10 +11,10 @@ import { UserStateService } from '../../../user/state/user-state.service';
 })
 export class ProductDetailComponent implements OnInit {
     @Input()
-    product: Product;
+    product!: Product;
 
     @Input()
-    detailTitle: string;
+    detailTitle!: string;
 
     constructor(private productState: ProductStateService, public userState: UserStateService) {}
 

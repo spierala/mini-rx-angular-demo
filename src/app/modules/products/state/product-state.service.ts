@@ -40,7 +40,9 @@ const getCurrentProduct = createSelector(
                 price: undefined,
             };
         } else {
-            return currentProductId ? state.products.find((p) => p.id === currentProductId) : null;
+            return currentProductId
+                ? state.products.find((p) => p.id === currentProductId)
+                : undefined;
         }
     }
 );
@@ -57,13 +59,18 @@ const getCartItemsWithExtraData = createSelector(
     getProducts,
     getCartItems,
     (products, cartItems) => {
-        return cartItems.reduce((accumulated, cartItem) => {
-            const foundProduct = products.find((product) => product.id === cartItem.productId);
+        return cartItems.reduce<CartItem[]>((accumulated, cartItem) => {
+            const foundProduct: Product | undefined = products.find(
+                (product) => product.id === cartItem.productId
+            );
             if (foundProduct) {
                 const newCartItem: CartItem = {
                     ...cartItem,
                     productName: foundProduct.productName,
-                    total: foundProduct.price * cartItem.amount,
+                    total:
+                        typeof foundProduct.price !== 'undefined'
+                            ? foundProduct.price * cartItem.amount
+                            : 0,
                 };
                 return [...accumulated, newCartItem];
             }
@@ -78,8 +85,11 @@ const getHasCartItems = createSelector(getCartItemsAmount, (amount) => {
     return amount > 0;
 });
 const getCartTotalPrice = createSelector(getCartItemsWithExtraData, (cartItemsWithExtra) =>
-    cartItemsWithExtra.reduce((previousValue: number, currentValue: CartItem) => {
-        return previousValue + currentValue.total;
+    cartItemsWithExtra.reduce<number>((previousValue: number, currentValue: CartItem) => {
+        if (typeof currentValue.total !== 'undefined') {
+            return previousValue + currentValue.total;
+        }
+        return previousValue;
     }, 0)
 );
 
@@ -88,7 +98,7 @@ const getCartTotalPrice = createSelector(getCartItemsWithExtraData, (cartItemsWi
 })
 export class ProductStateService {
     displayCode$: Observable<boolean> = this.store.select(getShowProductCode);
-    selectedProduct$: Observable<Product> = this.store.select(getCurrentProduct);
+    selectedProduct$: Observable<Product | undefined> = this.store.select(getCurrentProduct);
     products$: Observable<Product[]> = this.store.select(getFilteredProducts);
     errorMessage$: Observable<string> = this.store.select(getError);
     search$: Observable<string> = this.store.select(getSearch);
@@ -114,7 +124,7 @@ export class ProductStateService {
     }
 
     productSelected(product: Product): void {
-        this.store.dispatch(setCurrentProduct(product));
+        this.store.dispatch(setCurrentProduct(product.id!));
     }
 
     clearProduct(): void {
@@ -130,7 +140,7 @@ export class ProductStateService {
     }
 
     delete(product: Product): void {
-        this.store.dispatch(deleteProduct(product.id));
+        this.store.dispatch(deleteProduct(product.id!));
     }
 
     updateSearch(search: string) {
@@ -138,10 +148,10 @@ export class ProductStateService {
     }
 
     addProductToCart(product: Product) {
-        this.store.dispatch(addProductToCart(product.id));
+        this.store.dispatch(addProductToCart(product.id!));
     }
 
     removeProductFromCart(cartItem: CartItem) {
-        this.store.dispatch(removeProductFromCart(cartItem.productId));
+        this.store.dispatch(removeProductFromCart(cartItem.productId!));
     }
 }

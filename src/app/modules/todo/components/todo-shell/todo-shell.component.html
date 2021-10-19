@@ -5,7 +5,7 @@
             <button class="btn btn-primary btn-sm" (click)="addTodo()">New</button>
             <app-filter
                 (filterUpdate)="onFilterUpdate($event)"
-                [filter]="filter$ | async"
+                [filter]="(filter$ | async)!"
             ></app-filter>
         </div>
     </nav>
@@ -18,8 +18,8 @@
                         <span>Todos</span>
                     </div>
                     <app-todo-list
-                        [todos]="todosNotDone$ | async"
-                        [selectedTodo]="selectedTodo$ | async"
+                        [todos]="(todosNotDone$ | async)!"
+                        [selectedTodo]="(selectedTodo$ | async)!"
                         (selectTodo)="selectTodo($event)"
                     ></app-todo-list>
                 </div>
@@ -30,8 +30,8 @@
                         <span>Todos Done</span>
                     </div>
                     <app-todo-list
-                        [todos]="todosDone$ | async"
-                        [selectedTodo]="selectedTodo$ | async"
+                        [todos]="(todosDone$ | async)!"
+                        [selectedTodo]="(selectedTodo$ | async)!"
                         (selectTodo)="selectTodo($event)"
                     ></app-todo-list>
                 </div>

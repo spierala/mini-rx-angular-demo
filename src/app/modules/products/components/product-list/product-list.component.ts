@@ -8,16 +8,16 @@ import { Product } from '../../models/product';
 })
 export class ProductListComponent implements OnInit {
     @Input()
-    products: Product[];
+    products: Product[] = [];
 
     @Input()
-    selectedProduct: Product;
+    selectedProduct: Product | undefined;
 
     @Input()
-    displayCode: boolean;
+    displayCode = false;
 
     @Input()
-    showCartBtn: boolean;
+    showCartBtn = false;
 
     @Output()
     productSelect: EventEmitter<Product> = new EventEmitter<Product>();

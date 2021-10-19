@@ -13,7 +13,7 @@ import { TodosStateService } from '../../state/todos-state.service';
 export class TodoShellComponent {
     todosDone$: Observable<Todo[]> = this.todosState.todosDone$;
     todosNotDone$: Observable<Todo[]> = this.todosState.todosNotDone$;
-    selectedTodo$: Observable<Todo> = this.todosState.selectedTodo$;
+    selectedTodo$: Observable<Todo | undefined> = this.todosState.selectedTodo$;
     filter$: Observable<Filter> = this.todosState.filter$;
 
     constructor(private todosState: TodosStateService) {}

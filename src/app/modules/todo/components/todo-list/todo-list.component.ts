@@ -16,10 +16,10 @@ import { Todo } from '../../models/todo';
 })
 export class TodoListComponent implements OnInit {
     @Input()
-    todos: Todo[];
+    todos: Todo[] = [];
 
     @Input()
-    selectedTodo: Todo;
+    selectedTodo: Todo | undefined;
 
     @Output()
     selectTodo: EventEmitter<Todo> = new EventEmitter();

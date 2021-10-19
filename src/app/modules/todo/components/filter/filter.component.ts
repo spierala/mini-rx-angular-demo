@@ -42,7 +42,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Debounce just the text input
         this.formGroup
-            .get('search')
+            .get('search')!
             .valueChanges.pipe(takeUntil(this.unsubscribe$), debounceTime(350))
             .subscribe((value) => {
                 this.filterUpdate.emit({
@@ -52,7 +52,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             });
 
         this.formGroup
-            .get('category')
+            .get('category')!
             .valueChanges.pipe(takeUntil(this.unsubscribe$))
             .subscribe((value) => {
                 this.filterUpdate.emit({

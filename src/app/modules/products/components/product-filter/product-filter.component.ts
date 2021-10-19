@@ -19,16 +19,16 @@ export class ProductFilterComponent implements OnInit, OnDestroy {
     @Output()
     searchChanged: EventEmitter<string> = new EventEmitter<string>();
 
+    searchInput: FormControl = new FormControl();
     formGroup: FormGroup = new FormGroup({
-        search: new FormControl(),
+        search: this.searchInput,
     });
 
     constructor() {}
 
     ngOnInit(): void {
-        this.formGroup
-            .get('search')
-            .valueChanges.pipe(takeUntil(this.unsubscribe$), debounceTime(350))
+        this.searchInput.valueChanges
+            .pipe(takeUntil(this.unsubscribe$), debounceTime(350))
             .subscribe((value) => {
                 this.searchChanged.emit(value);
             });

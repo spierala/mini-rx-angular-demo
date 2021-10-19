@@ -12,7 +12,7 @@
                 </button>
             </div>
             <app-product-filter
-                [search]="productState.search$ | async"
+                [search]="(productState.search$ | async)!"
                 (searchChanged)="productState.updateSearch($event)"
             ></app-product-filter>
         </div>
@@ -22,9 +22,9 @@
         <div class="row">
             <div class="col">
                 <app-product-list
-                    [products]="productState.products$ | async"
-                    [selectedProduct]="productState.selectedProduct$ | async"
-                    [displayCode]="productState.displayCode$ | async"
+                    [products]="(productState.products$ | async)!"
+                    [selectedProduct]="(productState.selectedProduct$ | async)!"
+                    [displayCode]="(productState.displayCode$ | async)!"
                     [showCartBtn]="!permissions.canUpdateProducts"
                     (productSelect)="productState.productSelected($event)"
                     (displayCodeChange)="productState.toggleProductCode($event)"
@@ -34,7 +34,7 @@
             <div class="col" *ngIf="productState.selectedProduct$ | async as selectedProduct">
                 <app-product-detail
                     [product]="selectedProduct"
-                    [detailTitle]="detailTitle$ | async"
+                    [detailTitle]="(detailTitle$ | async)!"
                 ></app-product-detail>
             </div>
         </div>
