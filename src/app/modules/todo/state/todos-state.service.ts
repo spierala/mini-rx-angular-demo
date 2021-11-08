@@ -122,9 +122,9 @@ export class TodosStateService extends FeatureStore<TodoState> {
     });
 
     // ... with effect and optimistic update / undo
-    create = this.effect<{ todo: Todo; apiFail: boolean }>(
+    create = this.effect<Todo>(
         // FYI: we can skip the $payload pipe when using just one RxJS operator
-        mergeMap(({ todo, apiFail }) => {
+        mergeMap((todo) => {
             const optimisticUpdate: Action = this.setState(
                 {
                     todos: [...this.state.todos, todo],
@@ -132,7 +132,7 @@ export class TodosStateService extends FeatureStore<TodoState> {
                 'createOptimistic'
             );
 
-            return this.apiService.createTodo(todo, apiFail).pipe(
+            return this.apiService.createTodo(todo).pipe(
                 tap((newTodo) => {
                     this.setState(
                         (state) => ({
@@ -159,28 +159,61 @@ export class TodosStateService extends FeatureStore<TodoState> {
 
     // ...with subscribe
     update(todo: Todo) {
-        this.apiService.updateTodo(todo).subscribe((updatedTodo) => {
-            this.setState(
-                {
-                    todos: this.state.todos.map((item) =>
-                        item.id === todo.id ? updatedTodo : item
-                    ),
-                },
-                'updateSuccess'
-            );
-        });
+        const optimisticUpdate: Action = this.setState(
+            (state) => ({
+                todos: updateTodoInList(state.todos, todo),
+            }),
+            'updateOptimistic'
+        );
+
+        this.apiService
+            .updateTodo(todo)
+            .pipe(
+                tap((updatedTodo) => {
+                    this.setState(
+                        (state) => ({
+                            todos: updateTodoInList(state.todos, updatedTodo),
+                        }),
+                        'updateSuccess'
+                    );
+                }),
+                catchError(() => {
+                    this.undo(optimisticUpdate);
+                    return EMPTY;
+                })
+            )
+            .subscribe();
     }
 
     // ...with subscribe
     delete(todo: Todo) {
-        this.apiService.deleteTodo(todo).subscribe(() => {
-            this.setState(
-                {
-                    selectedTodoId: undefined,
-                    todos: this.state.todos.filter((item) => item.id !== todo.id),
-                },
-                'deleteSuccess'
-            );
-        });
+        const optimisticUpdate: Action = this.setState(
+            (state) => ({
+                todos: this.state.todos.filter((item) => item.id !== todo.id),
+            }),
+            'deleteOptimistic'
+        );
+
+        this.apiService
+            .deleteTodo(todo)
+            .pipe(
+                tap(() => {
+                    this.setState(
+                        {
+                            selectedTodoId: undefined,
+                        },
+                        'deleteSuccess'
+                    );
+                }),
+                catchError(() => {
+                    this.undo(optimisticUpdate);
+                    return EMPTY;
+                })
+            )
+            .subscribe();
     }
+}
+
+function updateTodoInList(todos: Todo[], updatedTodo: Todo): Todo[] {
+    return todos.map((item) => (item.id === updatedTodo.id ? updatedTodo : item));
 }

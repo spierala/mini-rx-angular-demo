@@ -1,37 +1,57 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Todo } from '../models/todo';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, tap } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import { ErrorHandlerService } from '../../../core/services/error-handler.service';
 
-const apiUrl = 'api/todos/';
+
+const todoApiUrl = 'api/todos/';
+const failingTodoApiUrl = 'api/todos-not-ok';
+let apiUrl = todoApiUrl;
+
+window.onkeyup = function (e) {
+    updateApiUrl(e.altKey);
+};
+window.onkeydown = function (e) {
+    console.log('bla')
+    updateApiUrl(e.altKey);
+};
+
+function updateApiUrl(altKeyPressed: boolean) {
+    apiUrl = altKeyPressed ? failingTodoApiUrl : todoApiUrl;
+}
 
 @Injectable({
     providedIn: 'root',
 })
 export class TodosApiService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private toastr: ToastrService, private errorHandler: ErrorHandlerService) {}
 
     getTodos(): Observable<Todo[]> {
-        return this.http.get<Todo[]>(apiUrl);
+        return this.http.get<Todo[]>(todoApiUrl);
     }
 
-    createTodo(todo: Todo, apiFail: boolean): Observable<Todo> {
+    createTodo(todo: Todo): Observable<Todo> {
+        console.log(todoApiUrl);
         return this.http.post<Todo>(apiUrl, todo).pipe(
-            map((value) => {
-                if (apiFail) {
-                    throw new Error('simulated API error');
-                }
-                return value;
-            })
+            tap(() => this.toastr.success('Todo created')),
+            catchError(err => this.errorHandler.handleError(err))
         );
     }
 
     updateTodo(todo: Todo): Observable<Todo> {
-        return this.http.put<Todo>(apiUrl + todo.id, todo);
+        return this.http.put<Todo>(apiUrl + todo.id, todo).pipe(
+            tap(() => this.toastr.success('Todo updated')),
+            catchError(err => this.errorHandler.handleError(err))
+        );
     }
 
     deleteTodo(todo: Todo): Observable<void> {
-        return this.http.delete<void>(apiUrl + todo.id);
+        return this.http.delete<void>(apiUrl + todo.id).pipe(
+            tap(() => this.toastr.success('Todo deleted')),
+            catchError(err => this.errorHandler.handleError(err))
+        );
     }
 }

@@ -5,3 +5,9 @@ html,
 body {
     height: 100%;
 }
+
+.info-icon {
+    font-size: 22px;
+    display: block;
+    margin-right: 12px;
+}

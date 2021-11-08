@@ -13,6 +13,7 @@ import { ImmutableStateExtension, UndoExtension } from 'mini-rx-store';
 import { ProductStateModule } from './modules/products/state/product-state.module';
 import { UserModule } from './modules/user/user.module';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
         HttpClientModule,
         HttpClientInMemoryWebApiModule.forRoot(DbService, { delay: 500, put204: false }),
         AppRoutingModule,
+        ToastrModule.forRoot(),
         TodoModule,
         CounterModule,
         UserModule,
