@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Todo } from '../../models/todo';
 import { TodosStateService } from '../../state/todos-state.service';
 
@@ -17,16 +16,11 @@ export class TodoDetailComponent implements OnInit {
 
     ngOnInit() {}
 
-    submit(form: NgForm) {
-        const newTodo: Todo = {
-            ...this.todo,
-            ...form.value,
-        };
-
-        if (newTodo.id) {
-            this.todosService.update(newTodo);
+    submit() {
+        if (this.todo.id) {
+            this.todosService.update(this.todo);
         } else {
-            this.todosService.create(newTodo);
+            this.todosService.create(this.todo);
         }
     }
 

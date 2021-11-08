@@ -12,7 +12,7 @@
                 <input
                     class="form-control"
                     type="text"
-                    [ngModel]="todo.title"
+                    [(ngModel)]="todo.title"
                     required
                     id="title"
                     name="title"
@@ -26,7 +26,7 @@
                         type="checkbox"
                         class="custom-control-input"
                         id="isDone"
-                        [ngModel]="todo.isDone"
+                        [(ngModel)]="todo.isDone"
                         name="isDone"
                     />
                     <label class="custom-control-label" for="isDone">Done</label>
@@ -40,7 +40,7 @@
                         type="checkbox"
                         id="isPrivate"
                         name="isPrivate"
-                        [ngModel]="todo.isPrivate"
+                        [(ngModel)]="todo.isPrivate"
                     />
                     <label class="form-check-label text-primary" for="isPrivate">Private</label>
                 </div>
@@ -50,14 +50,14 @@
                         type="checkbox"
                         id="isBusiness"
                         name="isBusiness"
-                        [ngModel]="todo.isBusiness"
+                        [(ngModel)]="todo.isBusiness"
                     />
                     <label class="form-check-label text-info" for="isBusiness">Business</label>
                 </div>
             </div>
             <button
                 class="btn btn-primary mr-2"
-                (click)="submit(form)"
+                (click)="submit()"
                 [disabled]="!form.valid || !form.dirty"
             >
                 Save

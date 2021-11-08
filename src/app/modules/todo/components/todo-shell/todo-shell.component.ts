@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { Todo } from '../../models/todo';
 import { Filter } from '../../models/filter';
 import { TodosStateService } from '../../state/todos-state.service';
+import { map } from 'rxjs/operators';
+import clonedeep from 'lodash/clonedeep';
 
 @Component({
     selector: 'app-todo-shell',
@@ -13,7 +15,9 @@ import { TodosStateService } from '../../state/todos-state.service';
 export class TodoShellComponent {
     todosDone$: Observable<Todo[]> = this.todosState.todosDone$;
     todosNotDone$: Observable<Todo[]> = this.todosState.todosNotDone$;
-    selectedTodo$: Observable<Todo | undefined> = this.todosState.selectedTodo$;
+    selectedTodo$: Observable<Todo | undefined> = this.todosState.selectedTodo$.pipe(
+        map(clonedeep) // Prevent [(ngModel)] from mutating the state
+    );
     filter$: Observable<Filter> = this.todosState.filter$;
 
     constructor(private todosState: TodosStateService) {}
