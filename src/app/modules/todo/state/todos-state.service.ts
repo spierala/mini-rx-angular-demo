@@ -9,15 +9,14 @@ import { Action, createFeatureSelector, createSelector, FeatureStore } from 'min
 // STATE INTERFACE
 interface TodoState {
     todos: Todo[];
-    selectedTodoId: number | undefined;
     filter: Filter;
-    newTodo: Todo | undefined; // Used when creating a new Todo
+    selectedTodo: Todo | undefined;
 }
 
 // INITIAL STATE
 const initialState: TodoState = {
     todos: [],
-    selectedTodoId: undefined,
+    selectedTodo: undefined,
     filter: {
         search: '',
         category: {
@@ -25,12 +24,14 @@ const initialState: TodoState = {
             isPrivate: false,
         },
     },
-    newTodo: undefined,
 };
 
 // MEMOIZED SELECTORS
 const getTodosFeatureSelector = createFeatureSelector<TodoState>();
 const getTodos = createSelector(getTodosFeatureSelector, (state) => state.todos);
+const getSelectedTodo = createSelector(
+    getTodosFeatureSelector, state => state.selectedTodo
+);
 const getFilter = createSelector(getTodosFeatureSelector, (state) => state.filter);
 const getTodosFiltered = createSelector(getTodos, getFilter, (todos, filter) => {
     return todos.filter((item) => {
@@ -46,19 +47,6 @@ const getTodosDone = createSelector(getTodosFiltered, (todos) =>
 );
 const getTodosNotDone = createSelector(getTodosFiltered, (todos) =>
     todos.filter((todo) => !todo.isDone)
-);
-const getNewTodo = createSelector(getTodosFeatureSelector, (state) => state.newTodo);
-const getSelectedTodoId = createSelector(getTodosFeatureSelector, (state) => state.selectedTodoId);
-const getSelectedTodo = createSelector(
-    getTodos,
-    getSelectedTodoId,
-    getNewTodo,
-    (todos, selectedTodoId, newTodo) => {
-        if (newTodo) {
-            return newTodo;
-        }
-        return todos.find((item) => item.id === selectedTodoId);
-    }
 );
 
 @Injectable({
@@ -79,18 +67,17 @@ export class TodosStateService extends FeatureStore<TodoState> {
 
     // UPDATE STATE
     selectTodo(todo: Todo) {
-        this.setState({ selectedTodoId: todo.id }, 'selectTodo');
+        this.setState({ selectedTodo: todo }, 'selectTodo');
     }
 
     initNewTodo() {
-        this.setState({ newTodo: new Todo(), selectedTodoId: undefined }, 'initNewTodo');
+        this.setState({ selectedTodo: new Todo() }, 'initNewTodo');
     }
 
     clearSelectedTodo() {
         this.setState(
             {
-                selectedTodoId: undefined,
-                newTodo: undefined,
+                selectedTodo: undefined,
             },
             'clearSelectedTodo'
         );
@@ -136,15 +123,7 @@ export class TodosStateService extends FeatureStore<TodoState> {
                 tap((newTodo) => {
                     this.setState(
                         (state) => ({
-                            todos: state.todos.map((item) =>
-                                item === todo
-                                    ? {
-                                          ...item,
-                                          id: newTodo.id,
-                                      }
-                                    : item
-                            ),
-                            newTodo: undefined,
+                            todos: state.todos.map((item) => (item === todo ? newTodo : item)),
                         }),
                         'createSuccess'
                     );
@@ -189,6 +168,7 @@ export class TodosStateService extends FeatureStore<TodoState> {
     delete(todo: Todo) {
         const optimisticUpdate: Action = this.setState(
             (state) => ({
+                selectedTodo: undefined,
                 todos: this.state.todos.filter((item) => item.id !== todo.id),
             }),
             'deleteOptimistic'
@@ -197,14 +177,6 @@ export class TodosStateService extends FeatureStore<TodoState> {
         this.apiService
             .deleteTodo(todo)
             .pipe(
-                tap(() => {
-                    this.setState(
-                        {
-                            selectedTodoId: undefined,
-                        },
-                        'deleteSuccess'
-                    );
-                }),
                 catchError(() => {
                     this.undo(optimisticUpdate);
                     return EMPTY;
