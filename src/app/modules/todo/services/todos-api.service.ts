@@ -15,7 +15,6 @@ window.onkeyup = function (e) {
     updateApiUrl(e.altKey);
 };
 window.onkeydown = function (e) {
-    console.log('bla')
     updateApiUrl(e.altKey);
 };
 
