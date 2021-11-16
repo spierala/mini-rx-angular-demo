@@ -37,6 +37,7 @@ export class ProductEffects {
         )
     );
 
+    // Effect with optimistic update
     updateProduct$ = this.actions$.pipe(
         ofType(updateProduct),
         toPayload(),

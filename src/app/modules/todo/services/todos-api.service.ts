@@ -33,7 +33,6 @@ export class TodosApiService {
     }
 
     createTodo(todo: Todo): Observable<Todo> {
-        console.log(todoApiUrl);
         return this.http.post<Todo>(apiUrl, todo).pipe(
             tap(() => this.toastr.success('Todo created')),
             catchError(err => this.errorHandler.handleError(err))
