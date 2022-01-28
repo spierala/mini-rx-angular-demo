@@ -112,10 +112,10 @@ export class TodosStateService extends FeatureStore<TodoState> {
     create = this.effect<Todo>(
         // FYI: we can skip the $payload pipe when using just one RxJS operator
         mergeMap((todo) => {
-            const optimisticUpdate: Action = this.setState(
-                {
+            const optimisticUpdate: Action = this.setState(state =>
+                ({
                     todos: [...this.state.todos, todo],
-                },
+                }),
                 'createOptimistic'
             );
 
