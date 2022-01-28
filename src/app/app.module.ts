@@ -30,7 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
             extensions: [new ImmutableStateExtension(), new UndoExtension(), new LoggerExtension()],
         }),
         StoreDevtoolsModule.instrument({
-            name: 'Stackblitz Angular MiniRx Todos Showcase',
+            name: 'MiniRx Angular Demo',
             maxAge: 25,
             latency: 250,
         }),

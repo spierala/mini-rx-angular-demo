@@ -114,7 +114,7 @@ export class TodosStateService extends FeatureStore<TodoState> {
         mergeMap((todo) => {
             const optimisticUpdate: Action = this.setState(state =>
                 ({
-                    todos: [...this.state.todos, todo],
+                    todos: [...state.todos, todo],
                 }),
                 'createOptimistic'
             );
