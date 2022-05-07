@@ -1,3 +1,6 @@
+# THIS REPO IS ARCHIVED!!!
+The MiniRx Angular Demo moved to https://github.com/spierala/mini-rx-store/tree/master/apps/mini-rx-angular-demo
+
 # MiniRx Store Demo (Angular)
 
 MiniRx is a RxJS Redux Store.
